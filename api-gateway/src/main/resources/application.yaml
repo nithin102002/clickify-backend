@@ -1,0 +1,113 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        # 🔹 USER SERVICE ROUTE
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/auth/**, /api/v1/test/**, /api/v1/users/**
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/products/**
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v1/orders/**
+
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/v1/payments/**
+
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/v1/cart/**
+
+        - id: review-service
+          uri: lb://review-service
+          predicates:
+            - Path=/api/v1/reviews/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: "b7e4c1e9a8f2d3c5e6f7a9b1c2d4e6f8a1b3c5d7e9f1a2b4c6d8e0f2a4b6c8d"
+
+security:
+  rules:
+    - path: /api/v1/products
+      method: POST
+      role: ROLE_ADMIN
+
+    - path: /api/v1/products
+      method: PUT
+      role: ROLE_ADMIN
+
+    - path: /api/v1/products
+      method: DELETE
+      role: ROLE_ADMIN
+
+    - path: /api/v1/products/search
+      method: GET
+      role: ROLE_USER
+
+    - path: /api/v1/users
+      method: GET
+      role: ROLE_ADMIN
+
+    - path: /api/v1/cart
+      method: GET
+      role: ROLE_USER
+
+    - path: /api/v1/cart
+      method: POST
+      role: ROLE_USER
+
+    - path: /api/v1/cart
+      method: PUT
+      role: ROLE_USER
+
+    - path: /api/v1/cart/**
+      method: DELETE
+      role: ROLE_USER
+
+    - path: /api/v1/orders
+      method: POST
+      role: ROLE_USER
+
+    - path: /api/v1/payments
+      method: POST
+      role: ROLE_USER
+
+
+    - path: /api/v1/payments/verify
+      method: POST
+      role: ROLE_USER
+
+    - path: /api/v1/payments/order/**
+      method: GET
+      role: ROLE_USER
+
+    - path: /api/v1/reviews
+      method: POST
+      role: ROLE_USER
+
+    - path: /api/v1/reviews/**
+      method: GET
+      role: ROLE_USER

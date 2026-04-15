@@ -1,0 +1,46 @@
+scalar BigDecimal
+
+type Query {
+    product(id: ID): Product
+    cart(username: String): Cart
+    order(id: ID): Order
+}
+
+type Product {
+    id: ID
+    name: String
+    price: BigDecimal
+    reviews: [Review]
+}
+
+type Review {
+    rating: Int
+    comment: String
+    username: String
+}
+
+type Cart {
+    username: String
+    items: [CartItem]
+}
+
+type CartItem {
+    productId: ID
+    quantity: Int
+    product: Product
+}
+
+type Order {
+    id: ID
+    status: String
+    totalPrice: BigDecimal
+    payment: Payment
+}
+
+type Payment {
+    status: String
+    amount: BigDecimal
+}
+
+
+

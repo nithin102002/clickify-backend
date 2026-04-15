@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecommerce-platform
+    username: postgres
+    password: Admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: my id
+            client-secret: my secret
+            scope:
+              - openid
+              - profile
+              - email
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: "b7e4c1e9a8f2d3c5e6f7a9b1c2d4e6f8a1b3c5d7e9f1a2b4c6d8e0f2a4b6c8d"
+  access-token-validity: 900000
+  refresh-token-validity: 604800000
